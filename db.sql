@@ -1,0 +1,122 @@
+drop table if exists public."pims_users";
+create table public."pims_users" (
+    "id" bigserial primary key,
+    "firstName" varchar(191) not null,
+    "middleName" varchar(191) null,
+    "lastName" varchar(191) not null,
+    "name" text not null,
+    "dateOfBirth" date null,
+    "gender" text not null default 'NOT SPECIFIED' check("gender" in ('MALE', 'FEMALE', 'OTHERS', 'UNKNOWN', 'NOT SPECIFIED')),
+    "phone" varchar(17) null,
+    "username" varchar(50) unique not null,
+    "email" varchar(191) not null unique,
+    "password" text not null,
+    "passwordResetCode" varchar(8) null,
+    "passwordResetLink" text null,
+    "passwordResetTime" timestamp null,
+    "passwordChangedTime" timestamp null,
+    "securityPin" varchar(4) null,
+    "emailAddressVerificationCode" varchar(8) null,
+    "phoneNumberVerificationCode" varchar(8) null,
+    "countryCode" varchar(3) not null default 'KE',
+    "countryName" varchar(255) not null default 'Kenya',
+    "timezoneName" varchar(255) not null default 'UTC',
+    "timezoneOffsetSeconds" integer not null default 0,
+    "lastSeenTime" timestamp null,
+    "lastLoginTime" timestamp null,
+    "type" text not null default 'USER' check("type" in ('SUPERUSER', 'ADMIN', 'USER')),
+    "status" text check("status" in ('ACTIVE', 'INACTIVE', 'SUSPENDED', 'BLOCKED')),
+    "createdAt" timestamp not null default now(),
+    "updatedAt" timestamp null
+);
+
+drop table if exists public."pims_commodities";
+create table public."pims_commodities" (
+    "id" bigserial primary key,
+    "name" varchar(191) not null unique,
+    "createdAt" timestamp not null default now(),
+    "updatedAt" timestamp null
+);
+
+drop table if exists public."pims_country_pests_field_data";
+create table public."pims_country_pests_field_data" (
+    "id" bigserial primary key,
+    "countryCode" varchar(3) not null,
+    "countryName" varchar(255) not null,
+    "lifeForm" text null,
+    "scientificName" text null,
+    "commonName" text null,
+    "kingdom" varchar(255) null,
+    "phylum" varchar(255) null,
+    "genus" varchar(255) null,
+    "family" varchar(255) null,
+    "synonyms" json not null default '[]',
+    "hostRanges" text null,
+    "climaticConditions" text null,
+    "lifeCycle" text null,
+    "dispersalMechanism" text null,
+    "sourcesOfInformation" json not null default '[]',
+    "pathway" text null,
+    "economicImpact" text null,
+    "controlAndManagement" text null,
+    "hostLifeStageAffected" text null,
+    "hostPlantPartAffected" text null,
+    "distributionWithinTheCountry" text null,
+    "dataCollectionYear" character(4) null,
+    "dataEntryPeriod" text null,
+    "pestStatus" text null,
+    "constrolPesticides" json not null default '[]',
+    "phytoSanitaryStatus" text not null default 'NOT SPECIFIED' check("phytoSanitaryStatus" in (
+        'QUARANTINE',
+        'NON-QUARANTINE',
+        'REGULATED',
+        'NON-REGULATED',
+        'NOT SPECIFIED'
+    )),
+    "imageUrls" json not null default '[]',
+    "imageSearchResults" json not null default '[]',
+    "createdAt" timestamp not null default now(),
+    "updatedAt" timestamp null
+);
+
+drop table if exists public."pims_country_pests";
+create table public."pims_country_pests" (
+    "id" bigserial primary key,
+    "countryCode" varchar(3) not null,
+    "countryName" varchar(255) not null,
+    "lifeForm" text not null,
+    "scientificName" text not null,
+    "commonName" text not null,
+    "kingdom" varchar(255) not null,
+    "phylum" varchar(255) not null,
+    "genus" varchar(255) not null,
+    "family" varchar(255) not null,
+    "synonyms" json not null default '[]',
+    "hostRanges" text not null,
+    "climaticConditions" text null,
+    "lifeCycle" text null,
+    "dispersalMechanism" text null,
+    "sourcesOfInformation" json not null default '[]',
+    "pathway" text null,
+    "economicImpact" text null,
+    "controlAndManagement" text null,
+    "hostLifeStageAffected" text null,
+    "hostPlantPartAffected" text null,
+    "distributionWithinTheCountry" text null,
+    "dataCollectionYear" character(4) null,
+    "dataEntryPeriod" text null,
+    "pestStatus" text null,
+    "constrolPesticides" json not null default '[]',
+    "phytoSanitaryStatus" text not null default 'NOT SPECIFIED' check("phytoSanitaryStatus" in (
+        'QUARANTINE',
+        'NON-QUARANTINE',
+        'REGULATED',
+        'NON-REGULATED',
+        'NOT SPECIFIED'
+    )),
+    "imageUrls" json not null default '[]',
+    "imageSearchResults" json not null default '[]',
+    "createdAt" timestamp not null default now(),
+    "updatedAt" timestamp null,
+    "praNumber" text not null
+);
