@@ -82,7 +82,6 @@ create table public."commodities" (
     "name" varchar(255) not null unique,
     "botanicalName" varchar(255) null,
     "description" text null,
-    "categoryId" integer null,
     "status" varchar(191) not null default 'ACTIVE' check("status" in ('ACTIVE', 'INACTIVE')),
     "createdBy" integer null,
     "updatedBy" integer null,
@@ -140,7 +139,7 @@ create table public."projects" (
     "objectives" text null,
     "startDate" date,
     "endDate" date,
-    "status" varchar(191) not null default 'ACTIVE' check("status" in ('ACTIVE', 'INACTIVE')),
+    "status" varchar(191) not null default 'ACTIVE' check("status" in ('INITIATION', 'IN PROGRESS', 'COMPLETED', 'SUSPENDED')),
     "createdBy" integer null,
     "updatedBy" integer null,
     "createdAt" timestamp not null default now(),
@@ -153,6 +152,8 @@ create table public."scouts"(
     "name" text not null,
     "countryId" integer not null,
     "nationalIdNumber" varchar(191) not null,
+    "phoneNumber" varchar(17) not null,
+    "email" varchar(191) not null,
     "createdAt" timestamp not null default now(),
     "updatedAt" timestamp null
 );
